@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head %}{{ super() }}{% endblock %}
+{% block title %}Система анализа{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>{% endblock %}
+
+{% block content %}
+<div class="col-3">
+    <p class="custom-blue">
+        If this text is blue, index.css works. <br>
+        If text in column, bootstrap works.
+    </p>
+    <p>
+        Проверка бд <br>
+        Имя: {{ user.name }} <br>
+        Пароль: {{ user.password }}
+    </p>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
+
+{% block footer %}
+
+<!--
+<nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+    <form class="mx-2" method="post" action="...">
+        <button type="submit" class="btn btn-success btn-lg d-none d-md-block">Подтвердить</button>
+        <button type="submit" class="btn btn-success btn d-block d-md-none">Подтвердить</button>
+    </form>
+    <form class="mx-2"  method="post" action="...">
+        <button type="submit" class="btn btn-danger btn-lg d-none d-md-block">Отклонить</button>
+        <button type="submit" class="btn btn-danger btn d-block d-md-none">Отклонить</button>
+    </form>
+    <form class="mx-2"  method="post" action="...">
+        <button type="submit" class="btn btn-dark btn-lg d-none d-md-block">Забраковать</button>
+        <button type="submit" class="btn btn-dark btn d-block d-md-none">Забраковать</button>
+    </form>
+    <form class="mx-2"  method="post" action="...">
+        <button type="submit" class="btn btn-light btn-lg d-none d-md-block">Сбросить</button>
+        <button type="submit" class="btn btn-light btn d-block d-md-none">Сбросить</button>
+    </form>
+</nav>
+-->
+{% endblock %}

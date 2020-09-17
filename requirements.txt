@@ -1,0 +1,7 @@
+sqlalchemy
+gunicorn
+flask
+flask-login
+psycopg2
+flask-sqlalchemy
+flask-migrate

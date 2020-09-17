@@ -1,0 +1,5 @@
+- name: Deploy to Google App Engine
+  uses: claudiuri/deploy-gae-action@master
+  with:
+    service-account:  ${{ secrets.SERVICE_ACCOUNT }}
+    project-id: ${{ secrets.PROJECT_ID }}
