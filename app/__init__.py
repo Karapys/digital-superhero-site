@@ -15,7 +15,7 @@ app.config['SECRET_KEY'] = SECRET_KEY
 db_user = os.environ["DB_USER"]
 db_pass = os.environ["DB_PASS"]
 db_name = os.environ["DB_NAME"]
-db_ip, db_port = os.environ["DB_HOST"].split(":")
+db_ip, db_port = os.getenv("DB_HOST", "127.0.0.1:3306").split(":")
 
 url = str(create_url(
     drivername="postgresql",

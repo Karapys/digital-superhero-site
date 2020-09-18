@@ -18,3 +18,9 @@ handlers:
 
 beta_settings:
   cloud_sql_instances: digital-superhero:europe-west3:digital-superhero=tcp:3306
+
+env_variables:
+  DB_HOST: "172.17.0.1:3306"
+
+network:
+  name: default

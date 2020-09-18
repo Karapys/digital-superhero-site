@@ -20,8 +20,10 @@ COPY ./requirements.txt /var/www/site/requirements.txt
 RUN pip install -r requirements.txt
 
 COPY app ${PROJECT_DIR}/app
-WORKDIR ${PROJECT_DIR}/app
+COPY ./start.sh /var/www/site
+COPY ./env /var/www/site
 
 EXPOSE 8080
+EXPOSE 3306
 ENTRYPOINT ["sh", "./start.sh"]
 
