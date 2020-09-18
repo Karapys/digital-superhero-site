@@ -1,14 +1,13 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text, Float
 from flask_login import UserMixin
-from app.database import Base
 from sqlalchemy.orm import relationship
+from app import db
 
 
-class User(Base, UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True)
-    password = Column(String(120), unique=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(120), unique=False)
 
     def __init__(self, name=None, password=None):
         self.name = name

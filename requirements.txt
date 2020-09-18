@@ -5,3 +5,4 @@ flask-login
 psycopg2
 flask-sqlalchemy
 flask-migrate
+pg8000

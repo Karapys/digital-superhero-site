@@ -10,7 +10,7 @@ login_manager.init_app(app)
 
 @app.route('/')
 def home():
-    user = User.query.all().first()
+    user = User.query.all()[0]
     return render_template("index.html", user=user)
 
 

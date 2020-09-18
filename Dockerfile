@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8.1-slim-buster
+FROM python:3.8.3-alpine
 
 # set project dir
 ENV PROJECT_DIR /var/www/site
@@ -12,15 +12,16 @@ ENV PYTHONPATH "${PYTHONPATH}:${PROJECT_DIR}/app:${PROJECT_DIR}"
 
 # install dependencies
 RUN pip install --upgrade pip
+# To make psycopg2 work
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
 COPY ./requirements.txt /var/www/site/requirements.txt
 RUN pip install -r requirements.txt
 
 COPY app ${PROJECT_DIR}/app
 WORKDIR ${PROJECT_DIR}/app
-RUN rm -f db.sqlite3
-RUN python init_default_db.py
 
 EXPOSE 8080
-CMD gunicorn -w 1 --bind 0.0.0.0:8080 --log-level debug wsgi:app
+ENTRYPOINT ["sh", "./start.sh"]
 

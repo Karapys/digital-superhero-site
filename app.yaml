@@ -4,9 +4,6 @@ env: flex
 manual_scaling:
   instances: 1
 
-env_variables:
-  DB_URI: "sqlite:///db.sqlite3"
-
 handlers:
   # This configures Google App Engine to serve the files in the app's static
   # directory.
@@ -18,3 +15,6 @@ handlers:
   # the entire handlers section) when there are no static files defined.
 - url: /.*
   script: auto
+
+beta_settings:
+  cloud_sql_instances: digital-superhero:europe-west3:digital-superhero=tcp:3306
