@@ -10,7 +10,7 @@ from app import db
 
 
 class File(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'files'
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
