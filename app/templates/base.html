@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/basic.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/dropzone.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/foundation.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/twentytwenty.css') }}">
 
         {% block css %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
@@ -20,7 +22,7 @@
                             <a class="nav-link active" href="/">Загрузить файлы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/status">Статус обработки</a>
+                            <a class="nav-link active" href="/tasks">Задачи</a>
                         </li>
                     </ul>
                 {% endif %}
@@ -45,7 +47,7 @@
 <body style="background-color: #f3f3f3">
 <div id="content">{% block content %}{% endblock %}</div>
 <script src="{{ url_for('static', filename='js/libs/popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/libs/jquery-3.3.1.slim.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/libs/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/libs/dropzone.min.js') }}"></script>
 <!-- <script src="{{ url_for('static', filename='js/libs/dropzone-amd-module.min.js') }}"></script>

@@ -137,3 +137,4 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 /cloud_sql_proxy.exe
+/app/static/files/

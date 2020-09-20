@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Логин{% endblock %}
+{% block head %}
+    {{ super() }}
+    {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/single_task.css') }}">
+    {% endblock %}
+
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <div class="row mt-4" style="width: 90%; max-width: 100%!important;">
+        <div class="col-3 px-0 flex-column" style="display: flex; max-width: 350px">
+            <div class="card mb-3 text-center">
+                <h5 class="p-3 mb-0">Файлы спутников</h5>
+            </div>
+            <div class="col card h-100 p-3">
+                <ul class="list-group list-group-flush">
+                    <div class="text-center pb-3">
+                        <input type="checkbox" id="toggleUsual" checked data-toggle="toggle" data-size="xs">
+                        Обычные
+                        <input type="checkbox" id="toggleSentinel" checked data-toggle="toggle" data-size="xs">
+                        Sentinel
+                    </div>
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-link w-100 usual">1. 20.09.2020 21:05</button>
+                        <button type="button" class="btn btn-link sentinel">2. 20.09.2020 21:05</button>
+                        <button type="button" class="btn btn-link sentinel">3. 20.09.2020 21:05</button>
+                        <button type="button" class="btn btn-link usual">4. 20.09.2020 21:05</button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-3" style="max-height: 58px">
+                <div class="card-body row">
+                    <div class="col">
+                        <input type="checkbox" id="toggle1" checked data-toggle="toggle" data-size="xs">
+                        Маска 1
+                    </div>
+                    <div class="col">
+                        <input type="checkbox" id="toggle2" checked data-toggle="toggle" data-size="xs">
+                        Маска 2
+                    </div>
+                </div>
+            </div>
+            <div id="task-slider">
+                <img src="{{ url_for('static', filename='files/before.jpg') }}">
+                <img src="{{ url_for('static', filename='files/after.jpg') }}">
+                {#                <img src="{{ url_for('static', filename='files/oie_transparent.png') }}" alt="Что то еще" style="opacity: 20%">#}
+                <img src="{{ url_for('static', filename='files/test2.jpg') }}" id="img2" style="opacity: 20%; mix-blend-mode: multiply;">
+                <img src="{{ url_for('static', filename='files/test3.jpg') }}" id="img3" style="opacity: 20%; mix-blend-mode: multiply;">
+            </div>
+            <div class="card mt-3">
+                <h5 class="card-header bg-transparent">Информация об аномалии</h5>
+                <div class="card-body" id="anomaly-info">
+                    Здесь будет инфа из кадастра. <br>
+                    Большой большой текст о чем то очень важном, но не смысле жизни,
+                    это слишокм банально. Просто заполнитель, мне лень искать латинский текст
+                    и я хочу отдохнуть от обдумывания всякой фигни.
+                </div>
+            </div>
+        </div>
+        <div class="col-3 px-0 flex-column" style="display: flex; max-width: 350px">
+            <div class="card mb-3 text-center">
+                <h5 class="p-3 mb-0">Аномалии</h5>
+            </div>
+            <div class="col card h-100">
+                <div class="btn-group-vertical mt-3">
+                        <button type="button" class="btn btn-link w-100">1. 20.09.2020 21:05</button>
+                        <button type="button" class="btn btn-link">2. 20.09.2020 21:05</button>
+                        <button type="button" class="btn btn-link">3. 20.09.2020 21:05</button>
+                        <button type="button" class="btn btn-link">4. 20.09.2020 21:05</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ url_for('static', filename='js/libs/jquery.event.move.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/libs/jquery.twentytwenty.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/single_task.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+{% endblock %}

@@ -1,6 +1,9 @@
 #!/bin/sh
-mv env .env
-source .env
+flask db migrate
+flask db upgrade
+
 cd app
-celery worker -A app.celery --loglevel=DEBUG --concurrency=1 -E &
-gunicorn -w 1 --bind 0.0.0.0:8080 --bind 0.0.0.0:3306 --log-level debug wsgi:app
+gunicorn -w 4 --bind 0.0.0.0:8080 --log-level debug wsgi:app \
+--timeout 200 \
+--reload \
+--preload

@@ -1,4 +1,3 @@
-dotenv
 sqlalchemy
 gunicorn
 flask
@@ -10,4 +9,3 @@ pg8000
 redis
 celery
 flask-wtf
-gevent

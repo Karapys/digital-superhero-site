@@ -1,0 +1,9 @@
+.checkbox-big {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
+
+.btn {
+    border: 1px solid rgba(0,0,0,.125);
+}

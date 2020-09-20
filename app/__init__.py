@@ -9,10 +9,6 @@ import redis
 import logging
 import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 SECRET_KEY = os.urandom(32)
 ALLOWED_EXTENSIONS = {'jpg', "jpeg"}
 
@@ -84,10 +80,9 @@ def change_status(filename, status_of_file):
 from celery.contrib import rdb
 @celery.task
 def process_file(path, filename):
-    rdb.set_trace()
     print(path, filename)
     change_status(filename, "processing")
-    # time.sleep(10)
+    time.sleep(20)
     with open(path) as f:
         pass
     change_status(filename, "ready")

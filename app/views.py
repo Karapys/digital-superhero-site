@@ -5,6 +5,7 @@ from app.utils import is_safe_url, get_extension_if_valid
 from app.models import *
 from os.path import join
 from random import random
+from functools import wraps
 import pickle
 import hashlib
 import time
@@ -23,14 +24,35 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+def create_admin():
+    user = User(name="admin", password="admin")
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
+def redirect_without_login(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_authenticated:
+            return f(*args, **kwargs)
+        else:
+            return redirect(url_for("login"))
+    return decorated_function
+
+
 @app.route('/')
 def index():
+    user = User.query.all()
+    if len(user) == 0:
+        user = create_admin()
+    else:
+        user = user[0]
     if current_user.is_authenticated:
-        user = User.query.all()[0]
         return render_template("index.html", user=user)
     else:
         if app.debug:
-            login_user(User.query.filter(User.name == "admin").first())
+            login_user(user)
         return redirect(url_for("login"))
 
 
@@ -59,16 +81,20 @@ def file_upload():
     return "Расширение не поддерживается", 403
 
 
-@app.route('/status', methods=['GET'])
+@app.route('/tasks', methods=['GET'])
+@redirect_without_login
 def status():
-    if current_user.is_authenticated:
-        files = []
-        for file in current_user.files:
-            status_of_file = get_status_of_files()[file.filename]
-            files.append({"status": status_of_file, "filename": file.filename})
-        return render_template("status.html", files=files)
-    else:
-        return redirect(url_for("login"))
+    files = []
+    for file in current_user.files:
+        status_of_file = get_status_of_files()[file.filename]
+        files.append({"status": status_of_file, "filename": file.filename, "id": file.id})
+    return render_template("tasks.html", files=files)
+
+
+@app.route('/task/<int:task_id>', methods=['GET'])
+@redirect_without_login
+def single_task(task_id):
+    return render_template("single_task.html")
 
 
 @app.route('/login', methods=['GET'])

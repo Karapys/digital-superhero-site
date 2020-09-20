@@ -3,6 +3,7 @@ services:
   web:
     build:
       context: .
+    command: sh ./start.sh
     ports:
     - "8080:8080"
     depends_on:
@@ -12,12 +13,36 @@ services:
       - DB_NAME=postgres
       - DB_USER=postgres
       - DB_PASS=postgres
-      - DB_HOST=127.0.0.1:5432
+      - DB_HOST=db:5432
+      - REDISHOST=redis
+    volumes:
+    - ./app:/var/www/site/app
   redis:
+    ports:
+    - "6379:6379"
     image: redis
   db:
     image: postgres
+    ports:
+    - "5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  celery:
+    build: .
+    container_name: 'celery_worker'
+    command: celery worker -A app.celery --loglevel=DEBUG
+    volumes:
+    - ./app:/var/www/site/app
+    environment:
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_HOST=db:5432
+      - REDISHOST=redis
+    links:
+      - redis
+    depends_on:
+      - web
+      - redis

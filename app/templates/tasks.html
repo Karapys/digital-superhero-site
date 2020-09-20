@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Логин{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="row mt-4">
+        {% for file in files %}
+            <article class="card m-2" style="height: 100%">
+                <form class="text-center" method="get" action="task/{{ file["id"] }}">
+                    <button class="btn flex-column justify-content-center text-center pt-3">
+                        {#                <img id="main_img" src="{{ url_for('static', filename="files/uploaded/" + file["filename"]) }}"#}
+                        {#                     class="mb-2" style="width: 100%; height: 100%; top: 0px; left: 0px;">#}
+                        <svg width="150px" height="150px" viewBox="0 0 16 16" class="bi bi-file-zip" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"></path>
+                            <path fill-rule="evenodd" d="M6.5 7.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v.938l.4 1.599a1 1 0 0 1-.416 1.074l-.93.62a1 1 0 0 1-1.109 0l-.93-.62a1 1 0 0 1-.415-1.074l.4-1.599V7.5zm2 0h-1v.938a1 1 0 0 1-.03.243l-.4 1.598.93.62.93-.62-.4-1.598a1 1 0 0 1-.03-.243V7.5z"></path>
+                            <path d="M7.5 1H9v1H7.5zm-1 1H8v1H6.5zm1 1H9v1H7.5zm-1 1H8v1H6.5zm1 1H9v1H7.5V5z"></path>
+                        </svg>
+                        <p class="my-1">Статус: {{ file["status"] }}</p>
+                    </button>
+                </form>
+            </article>
+        {% endfor %}
+    </div>
+{% endblock %}
