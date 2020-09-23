@@ -2,6 +2,7 @@ from flask import Flask
 from sqlalchemy.engine.url import URL as create_url
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from zipfile import ZipFile
 
 from celery import Celery
 import redis
@@ -9,8 +10,14 @@ import redis
 import logging
 import os
 
+from os import listdir
+from celery.contrib import rdb
+import numpy as np
+import uuid
+from app.cloud_finder import find_clouds, tif_to_npz, npz_to_imgs
+
 SECRET_KEY = os.urandom(32)
-ALLOWED_EXTENSIONS = {'jpg', "jpeg"}
+ALLOWED_EXTENSIONS = {'zip'}
 
 redis_host = os.getenv('REDISHOST', 'localhost')
 redis_port = int(os.getenv('REDISPORT', 6379))
@@ -77,14 +84,28 @@ def change_status(filename, status_of_file):
     save_status_of_files(status_of_files)
 
 
-from celery.contrib import rdb
 @celery.task
 def process_file(path, filename):
     print(path, filename)
     change_status(filename, "processing")
-    time.sleep(20)
-    with open(path) as f:
-        pass
+    folder_name = str(uuid.uuid1().int)
+
+    with ZipFile(join(path, filename), 'r') as zipObj:
+        zipObj.extractall(join(path, folder_name))
+
+    tifs = list(listdir(join(path, folder_name)))
+    tifs = [join(path, folder_name, x) for x in tifs]
+    print(tifs)
+    tif_to_npz(tifs)
+    print("OK")
+    data = np.load('data.npz')['data']
+    print("OK x2")
+    image_nums = npz_to_imgs(tifs, join(path, folder_name), data)
+    print(image_nums)
+    find_clouds(filename, join(path, folder_name), data)
+    print("OK x3")
+    redis_client.set(filename, pickle.dumps((folder_name, image_nums)))
+
     change_status(filename, "ready")
 
 

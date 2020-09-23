@@ -138,3 +138,5 @@ dmypy.json
 cython_debug/
 /cloud_sql_proxy.exe
 /app/static/files/
+!/app/static/files/uploaded/
+

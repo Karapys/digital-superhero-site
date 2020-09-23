@@ -9,3 +9,9 @@ pg8000
 redis
 celery
 flask-wtf
+Pillow
+numpy
+tqdm
+scikit-build
+matplotlib
+eo-learn

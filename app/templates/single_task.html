@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-    <div class="row mt-4" style="width: 90%; max-width: 100%!important;">
+    <div class="row mt-4 mb-3" style="width: 90%; max-width: 100%!important;">
         <div class="col-3 px-0 flex-column" style="display: flex; max-width: 350px">
             <div class="card mb-3 text-center">
                 <h5 class="p-3 mb-0">Файлы спутников</h5>
@@ -23,10 +23,13 @@
                         Sentinel
                     </div>
                     <div class="btn-group-vertical">
-                        <button type="button" class="btn btn-link w-100 usual">1. 20.09.2020 21:05</button>
-                        <button type="button" class="btn btn-link sentinel">2. 20.09.2020 21:05</button>
-                        <button type="button" class="btn btn-link sentinel">3. 20.09.2020 21:05</button>
-                        <button type="button" class="btn btn-link usual">4. 20.09.2020 21:05</button>
+                        {% for image in files %}
+                            <a href="./photo-{{ image }}" type="button" class="btn btn-link w-100 usual">Изображение {{ image }}</a>
+                        {% endfor %}
+{#                        <button type="button" class="btn btn-link w-100 usual">1. 20.09.2020 21:05</button>#}
+{#                        <button type="button" class="btn btn-link sentinel">2. 20.09.2020 21:05</button>#}
+{#                        <button type="button" class="btn btn-link sentinel">3. 20.09.2020 21:05</button>#}
+{#                        <button type="button" class="btn btn-link usual">4. 20.09.2020 21:05</button>#}
                     </div>
                 </ul>
             </div>
@@ -36,28 +39,29 @@
                 <div class="card-body row">
                     <div class="col">
                         <input type="checkbox" id="toggle1" checked data-toggle="toggle" data-size="xs">
-                        Маска 1
+                        Облака
                     </div>
                     <div class="col">
                         <input type="checkbox" id="toggle2" checked data-toggle="toggle" data-size="xs">
-                        Маска 2
+                        Облака другой вид
                     </div>
                 </div>
             </div>
-            <div id="task-slider">
-                <img src="{{ url_for('static', filename='files/before.jpg') }}">
-                <img src="{{ url_for('static', filename='files/after.jpg') }}">
-                {#                <img src="{{ url_for('static', filename='files/oie_transparent.png') }}" alt="Что то еще" style="opacity: 20%">#}
-                <img src="{{ url_for('static', filename='files/test2.jpg') }}" id="img2" style="opacity: 20%; mix-blend-mode: multiply;">
-                <img src="{{ url_for('static', filename='files/test3.jpg') }}" id="img3" style="opacity: 20%; mix-blend-mode: multiply;">
+            <div class="center">
+                <div id="task-slider" style="max-width: 600px">
+                    <img style="width: 100%; max-width: 600px" src="{{ url_for('static', filename='files/uploaded/'+folder_name+'/'+photo_id+'.png') }}">
+                    <img style="width: 100%; max-width: 600px" src="{{ url_for('static', filename='files/uploaded/'+folder_name+'/'+photo_id+'.png') }}">
+                    {#                <img src="{{ url_for('static', filename='files/oie_transparent.png') }}" alt="Что то еще" style="opacity: 20%">#}
+                    <img src="{{ url_for('static', filename='files/uploaded/'+folder_name+'/clouds_opening.png') }}" id="img2" style="opacity: 100%; mix-blend-mode: multiply;">
+                    <img src="{{ url_for('static', filename='files/uploaded/'+folder_name+'/clouds.png') }}" id="img3" style="opacity: 100%; mix-blend-mode: multiply;">
+                </div>
             </div>
             <div class="card mt-3">
-                <h5 class="card-header bg-transparent">Информация об аномалии</h5>
+                <h5 class="card-header bg-transparent">Информация о фото</h5>
                 <div class="card-body" id="anomaly-info">
-                    Здесь будет инфа из кадастра. <br>
-                    Большой большой текст о чем то очень важном, но не смысле жизни,
-                    это слишокм банально. Просто заполнитель, мне лень искать латинский текст
-                    и я хочу отдохнуть от обдумывания всякой фигни.
+                    AOI 4 <br>
+                    Координаты: <br>
+                    Широта: 55.93541800 Долгота: 49.26067000 <br>
                 </div>
             </div>
         </div>
@@ -67,10 +71,10 @@
             </div>
             <div class="col card h-100">
                 <div class="btn-group-vertical mt-3">
-                        <button type="button" class="btn btn-link w-100">1. 20.09.2020 21:05</button>
-                        <button type="button" class="btn btn-link">2. 20.09.2020 21:05</button>
-                        <button type="button" class="btn btn-link">3. 20.09.2020 21:05</button>
-                        <button type="button" class="btn btn-link">4. 20.09.2020 21:05</button>
+{#                        <button type="button" class="btn btn-link w-100">1. 20.09.2020 21:05</button>#}
+{#                        <button type="button" class="btn btn-link">2. 20.09.2020 21:05</button>#}
+{#                        <button type="button" class="btn btn-link">3. 20.09.2020 21:05</button>#}
+{#                        <button type="button" class="btn btn-link">4. 20.09.2020 21:05</button>#}
                     </div>
             </div>
         </div>

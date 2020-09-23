@@ -30,7 +30,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   celery:
-    build: .
+    image: digital_superhero_web:latest
     container_name: 'celery_worker'
     command: celery worker -A app.celery --loglevel=DEBUG
     volumes:
@@ -46,3 +46,4 @@ services:
     depends_on:
       - web
       - redis
+      - db

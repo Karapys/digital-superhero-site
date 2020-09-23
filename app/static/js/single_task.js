@@ -10,7 +10,7 @@ $(function() {
     if(img.style.opacity !== "0") {
       img.style.opacity = "0";
     } else {
-      img.style.opacity = "0.2";
+      img.style.opacity = "1";
     }
   });
   $('#toggle2').change(function() {
@@ -18,7 +18,7 @@ $(function() {
     if(img.style.opacity !== "0") {
       img.style.opacity = "0";
     } else {
-      img.style.opacity = "0.2";
+      img.style.opacity = "1";
     }
   });
 

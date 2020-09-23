@@ -1,4 +1,4 @@
-from app import app, celery, db, redis_client, process_file, get_status_of_files
+from app import app, celery, db, redis_client, process_file, get_status_of_files, redis_client
 from flask import render_template, redirect, url_for, flash, request, jsonify, abort
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from app.utils import is_safe_url, get_extension_if_valid
@@ -68,14 +68,14 @@ def file_upload():
         if file.filename == '':
             return 'Пустое имя файла', 403
         filename = file_hash.hexdigest() + "." + extension
-        path = join(app.static_folder, "files", "uploaded", filename)
+        path = join(app.static_folder, "files", "uploaded")
 
         user = User.query.get(current_user.id)
         file_model = File(user.id, filename)
         user.files.append(file_model)
         db.session.commit()
 
-        file.save(path)
+        file.save(join(path, filename))
         process_file.delay(path, filename)
         return jsonify(filename=filename, success=True)
     return "Расширение не поддерживается", 403
@@ -85,7 +85,7 @@ def file_upload():
 @redirect_without_login
 def status():
     files = []
-    for file in current_user.files:
+    for file in current_user.files[::-1]:
         status_of_file = get_status_of_files()[file.filename]
         files.append({"status": status_of_file, "filename": file.filename, "id": file.id})
     return render_template("tasks.html", files=files)
@@ -94,7 +94,20 @@ def status():
 @app.route('/task/<int:task_id>', methods=['GET'])
 @redirect_without_login
 def single_task(task_id):
-    return render_template("single_task.html")
+    return redirect("/task/"+str(task_id)+"/photo-1")
+
+
+@app.route('/task/<int:task_id>/photo-<int:photo_id>', methods=['GET'])
+@redirect_without_login
+def photo(task_id, photo_id):
+    task = File.query.get(task_id)
+    folder_name, files = pickle.loads(redis_client.get(task.filename))
+    print(folder_name, files)
+    print(files[photo_id-1])
+    return render_template("single_task.html",
+                           photo_id=str(photo_id),
+                           folder_name=str(folder_name),
+                           files=files)
 
 
 @app.route('/login', methods=['GET'])
