@@ -1,11 +1,12 @@
 version: '3.0'
 services:
   web:
+    image: digital_superhero_web
     build:
       context: .
     command: sh ./start.sh
     ports:
-    - "8080:8080"
+      - "8080:8080"
     depends_on:
       - db
       - redis
@@ -16,25 +17,27 @@ services:
       - DB_HOST=db:5432
       - REDISHOST=redis
     volumes:
-    - ./app:/var/www/site/app
+      - app-volume:/var/www/site/app
   redis:
     ports:
-    - "6379:6379"
+      - "6379:6379"
     image: redis
   db:
     image: postgres
     ports:
-    - "5432:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   celery:
     image: digital_superhero_web:latest
     container_name: 'celery_worker'
-    command: celery worker -A app.celery --loglevel=DEBUG
+    command: celery -A app.celery worker --loglevel=DEBUG
     volumes:
-    - ./app:/var/www/site/app
+      - ./app:/var/www/site/app
     environment:
       - DB_NAME=postgres
       - DB_USER=postgres
@@ -47,3 +50,8 @@ services:
       - web
       - redis
       - db
+    volumes:
+      - app-volume:/var/www/site/app
+volumes:
+  app-volume:
+  pgdata:

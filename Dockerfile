@@ -26,3 +26,5 @@ COPY ./start.sh ${PROJECT_DIR}
 COPY migrations ${PROJECT_DIR}/migrations
 COPY app ${PROJECT_DIR}/app
 
+RUN mkdir -p app/eo_learn/patch
+RUN mkdir -p app/static/files/uploaded
